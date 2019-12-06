@@ -1,0 +1,2 @@
+plugin.tx_form.settings.yamlConfigurations.100 = EXT:mailmanager/Configuration/Form/FormFrontend.yaml
+module.tx_form.settings.yamlConfigurations.100 = EXT:mailmanager/Configuration/Form/FormBackend.yaml

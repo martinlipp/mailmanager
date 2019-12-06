@@ -1,0 +1,10 @@
+TYPO3:
+  CMS:
+    Form:
+      prototypes:
+        standard:
+          finishersDefinition:
+            EmailToSenderMailManager:
+              implementationClassName: 'Codeminds\MailManager\Domain\Finishers\EmailFinisher'
+            EmailToReceiverMailManager:
+              implementationClassName: 'Codeminds\MailManager\Domain\Finishers\EmailFinisher'

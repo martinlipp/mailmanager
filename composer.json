@@ -1,0 +1,18 @@
+{
+    "name": "codeminds/mailmanager",
+    "type": "typo3-cms-extension",
+    "description": "Manage all outgoing mails in one central place. Configure all mails in one yaml file and disable or reroute all mails for debugging with one switch. Output the mail contents to files for more quick debugging.",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "typo3/cms-core": "^9.5"
+    },
+    "replace": {
+        "codeminds/mailmanager": "self.version",
+        "typo3-ter/mailmanager": "self.version"
+    },
+    "autoload": {
+        "psr-4": {
+            "Codeminds\\MailManager\\": "Classes/"
+        }
+    }
+}

@@ -1,0 +1,99 @@
+TYPO3:
+  CMS:
+    Form:
+      prototypes:
+        standard:
+          formEditor:
+            dynamicRequireJsModules:
+              additionalViewModelModules:
+                10: 'TYPO3/CMS/Mailmanager/Backend/FormEditor/ViewModel'
+            formEditorPartials:
+              Inspector-SelectFormelementsEditor: 'Inspector/SingleSelectEditor'
+          formElementsDefinition:
+            Form:
+              formEditor:
+                editors:
+                  900:
+                    # Extend finisher drop down
+                    selectOptions:
+                      35:
+                        value: 'EmailToSenderMailManager'
+                        label: 'Email to submitter (via MailManager)'
+                      36:
+                        value: 'EmailToReceiverMailManager'
+                        label: 'Email to you (via MailManager)'
+                      
+                propertyCollections:
+                  finishers:
+                    # add finisher fields
+                    25:
+                      identifier: 'EmailToSenderMailManager'
+                      editors:
+                        __inheritances:
+                          10: 'TYPO3.CMS.Form.mixins.formElementMixins.BaseCollectionEditorsMixin'
+                        100:
+                          label: "Email to submitter (via MailManager)"
+                        105:
+                          identifier: 'configurationName'
+                          templateName: 'Inspector-TextEditor'
+                          label: 'Configuration identifier'
+                          propertyPath: 'options.configurationName'
+                          propertyValidators:
+                            10: 'NotEmpty'
+                        110:
+                          identifier: 'recipientAddress'
+                          templateName: 'Inspector-SelectFormelementsEditor'
+                          label: 'Recipient address (use {emailAddress} in configuration)'
+                          propertyPath: 'options.emailAddress'
+                        111:
+                          identifier: 'recipientName'
+                          templateName: 'Inspector-SelectFormelementsEditor'
+                          label: 'Recipient name (use {name} in configuration)'
+                          propertyPath: 'options.name'
+                    26:
+                      identifier: 'EmailToReceiverMailManager'
+                      editors:
+                        __inheritances:
+                          10: 'TYPO3.CMS.Form.mixins.formElementMixins.BaseCollectionEditorsMixin'
+                        100:
+                          label: "Email to you (via MailManager)"
+                        105:
+                          identifier: 'configurationName'
+                          templateName: 'Inspector-TextEditor'
+                          label: 'Configuration identifier'
+                          propertyPath: 'options.configurationName'
+                          propertyValidators:
+                            10: 'NotEmpty'
+                        110:
+                          identifier: 'senderAddress'
+                          templateName: 'Inspector-SelectFormelementsEditor'
+                          label: 'Sender address (use {emailAddress} in configuration)'
+                          propertyPath: 'options.emailAddress'
+                        111:
+                          identifier: 'senderName'
+                          templateName: 'Inspector-SelectFormelementsEditor'
+                          label: 'Sender name (use {name} in configuration)'
+                          propertyPath: 'options.name'
+                    
+
+          finishersDefinition:
+            EmailToSenderMailManager:
+              formEditor:
+                iconIdentifier: t3-form-icon-finisher
+                label: 'Email to submitter (via MailManager)'
+                predefinedDefaults:
+                  options:
+                    configurationName: ''
+                    recipientAddress: ''
+                    recipientName: ''
+            EmailToReceiverMailManager:
+              formEditor:
+                iconIdentifier: t3-form-icon-finisher
+                label: 'Email to you (via MailManager)'
+                predefinedDefaults:
+                  options:
+                    configurationName: ''
+                    senderAddress: ''
+                    senderName: ''
+
+
