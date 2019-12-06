@@ -2,6 +2,26 @@
 declare(strict_types = 1);
 namespace Codeminds\MailManager\Domain\Finishers;
 
+/**
+ * Copyright 2019 Martin Lipp
+ * 
+ * This file is part of "mailmanager", an extension for TYPO3 CMS.
+ * 
+ * mailmanager is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * mailmanager is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
+
+use Swift_Attachment;
 use TYPO3\CMS\Extbase\Annotation\Inject;
 use TYPO3\CMS\Form\Domain\Finishers as Finishers;
 use TYPO3\CMS\Form\Service\TranslationService;
@@ -54,7 +74,7 @@ class EmailFinisher extends Finishers\EmailFinisher
                     $file = $file->getOriginalResource();
                 }
 
-                $attachments[] = \Swift_Attachment::newInstance($file->getContents(), $file->getName(), $file->getMimeType());
+                $attachments[] = Swift_Attachment::newInstance($file->getContents(), $file->getName(), $file->getMimeType());
             }
         }
 

@@ -2,6 +2,25 @@
 declare(strict_types=1);
 namespace Codeminds\MailManager\Service;
 
+/**
+ * Copyright 2019 Martin Lipp
+ * 
+ * This file is part of "mailmanager", an extension for TYPO3 CMS.
+ * 
+ * mailmanager is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * mailmanager is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
+
 use Codeminds\MailManager\Service\MailService;
 use Exception;
 use Swift_Attachment;
@@ -116,7 +135,7 @@ class MailService {
      * @param string $type
      * @return array
      */
-    protected function getRecipientsByType($type = 'cc'): array
+    protected function getRecipientsByType(string $type = 'cc'): array
     {
         $configuration = $this->configuration;
         if (empty($configuration[$type])) {

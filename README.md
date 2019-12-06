@@ -10,7 +10,7 @@
 
 ### 1) Installation
 
-Install the extension using Composer: `composer require martinlipp/mailmanager`.
+Install the extension using Composer: `composer require codeminds/mailmanager`.
 
 ### 2) Minimal setup
 
@@ -47,6 +47,8 @@ debug:
 ```
 5) Use the provided MailService to send your mails:
 ```
+use TYPO3\CMS\Extbase\Annotation\Inject;
+
 /**
  * @Inject
  * @var Codeminds\MailManager\Service\MailService
@@ -63,7 +65,7 @@ $this->mailService->sendMail('MyIdentifier', $variables);
 
 ### 3) Additional setup (optional)
 
-##### a) Use variables in configuration
+#### a) Use variables in configuration
 You can use variables in your yaml configuration to e.g. set the recipient dynamically. Refer to the variable by using curly brackets: `{variableName}`. It is also possible to refer to nested variables: `{variable.nested.variableName}`.
 Example:
 ```
@@ -80,16 +82,61 @@ configurations:
 .
 .
 ```
-##### b) Use with TYPO3 form
+#### b) Use with TYPO3 form
 1) Include the static TypoScript of the extension.
 2) You can now add the two new finishers in the form module: Email to submitter (via MailManager) and Email to you (via MailManager)
 3) In the finisher you have to define the identifier of your corresponding mail configuration
 4) Optionaly you can set the receiver or sender to a dynamically set value coming from the form (the mail configuration has to be defined accordingly by setting `{emailAddress}` or `{name}`)
-5) Define the templates and partials of the form extension (or use or own). In your yaml mail configuration:
+5) Define the templates and partials of the form extension (or use your own). In your yaml mail configuration:
 ```
     templatePathAndFileName: 'EXT:form/Resources/Private/Frontend/Templates/Finishers/Email/Html.html'
     partialRootPaths: ['EXT:form/Resources/Private/Frontend/Partials']
 ```
 
-##### c) Debugging
-Just use the self explanatory options under `debug` in your yaml file. If `enableDebugOutputToFiles` is on, the files will be put to /typo3temp/mails/<Identifier>.html for quick access via your browser.
+#### c) Debugging
+Use the self explanatory options under `debug` in your yaml file. If `enableDebugOutputToFiles` is on, the files will be put to /typo3temp/mails/MyIdentifier.html for quick access via your browser.
+
+#### d) Full configuration and attachments
+You can also configure cc, bcc, reply-to addresses and attachments. See this configuration with all possible options used:
+```
+configurations:
+  -
+    identifier: 'MyIdentifier'
+    isActive: true
+    senderEmailAddress: 'sender@company.com'
+    senderName: 'My sender'
+    recipients:
+      -
+        emailAddress: 'recipient@company.com'
+        name: 'My recipient'
+    cc:
+      -
+        emailAddress: 'cc@company.com'
+        name: 'My cc recipient'
+    bcc:
+      -
+        emailAddress: 'bcc@company.com'
+        name: 'My bcc recipient'
+    replyTo:
+      -
+        emailAddress: 'replyto@company.com'
+        name: 'My replyto name'
+    subject: 'My subject'
+    attachments: ['EXT:your_site_package/Resources/Private/Pds/attachment.pdf']
+    templatePathAndFileName: 'EXT:your_site_package/Resources/Private/Templates/Mails/YourIdentifier.html'
+    partialRootPaths: []
+    layoutRootPaths: []
+debug:
+  disableDelivery: false
+  enableRerouting: false
+  reroutingEmailAddress: 'debug@company.com'
+  reroutingName: 'Debug'
+  enableDebugOutputToFiles: false
+```
+Attach files programmatically:
+```
+$pathAttachments[] = 'EXT:your_site_package/Resources/Private/Pds/attachment.pdf';
+$file = $myFileReference->getOriginalResource();
+$swiftAttachments[] = Swift_Attachment::newInstance($file->getContents(), $file->getName(), $file->getMimeType());
+$this->mailService->sendMail('MyIdentifier', $variables, $pathAttachments, $swiftAttachments);
+```
